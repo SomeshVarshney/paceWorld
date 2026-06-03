@@ -1,19 +1,20 @@
 import { useEffect, useState } from "react";
 import { getProducts } from "../api/products";
+import ProductForm from "../components/ProductForm";
 
 function ProductsPage() {
   const [products, setProducts] = useState<any[]>([]);
 
-  useEffect(() => {
-    const loadProducts = async () => {
-      try {
-        const data = await getProducts();
-        setProducts(data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
+  const loadProducts = async () => {
+    try {
+      const data = await getProducts();
+      setProducts(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
+  useEffect(() => {
     loadProducts();
   }, []);
 
@@ -23,6 +24,10 @@ function ProductsPage() {
         Products
       </h2>
 
+      {/* Product Form */}
+      <ProductForm onSuccess={loadProducts} />
+
+      {/* Product Table */}
       <div className="bg-white rounded-xl shadow p-4">
         <table className="w-full">
           <thead>
@@ -41,22 +46,10 @@ function ProductsPage() {
                 key={product.id}
                 className="border-b"
               >
-                <td className="p-2">
-                  {product.name}
-                </td>
-
-                <td className="p-2">
-                  {product.brand}
-                </td>
-
-                <td className="p-2">
-                  {product.boxQuantity}
-                </td>
-
-                <td className="p-2">
-                  {product.unitQuantity}
-                </td>
-
+                <td className="p-2">{product.name}</td>
+                <td className="p-2">{product.brand}</td>
+                <td className="p-2">{product.boxQuantity}</td>
+                <td className="p-2">{product.unitQuantity}</td>
                 <td className="p-2">
                   {product.category?.name}
                 </td>

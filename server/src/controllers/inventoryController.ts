@@ -119,3 +119,29 @@ export const saleStock = async (
     });
   }
 };
+
+export const getTransactions = async (
+  req: Request,
+  res: Response
+) => {
+  try {
+    const transactions =
+      await prisma.inventoryTransaction.findMany({
+        include: {
+          product: true,
+        },
+        orderBy: {
+          createdAt: "desc",
+        },
+      });
+
+    res.json(transactions);
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      message:
+        "Failed to fetch transactions",
+    });
+  }
+};
