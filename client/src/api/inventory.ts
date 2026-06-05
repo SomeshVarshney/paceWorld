@@ -3,12 +3,21 @@ import axios from "axios";
 const API_URL =
   "http://localhost:5000/inventory";
 
+const getAuthHeaders = () => ({
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem(
+      "token"
+    )}`,
+  },
+});
+
 export const purchaseStock = async (
   data: any
 ) => {
   const response = await axios.post(
     `${API_URL}/purchase`,
-    data
+    data,
+    getAuthHeaders()
   );
 
   return response.data;
@@ -19,7 +28,8 @@ export const saleStock = async (
 ) => {
   const response = await axios.post(
     `${API_URL}/sale`,
-    data
+    data,
+    getAuthHeaders()
   );
 
   return response.data;
@@ -28,7 +38,8 @@ export const saleStock = async (
 export const getTransactions =
   async () => {
     const response = await axios.get(
-      "http://localhost:5000/inventory/transactions"
+      `${API_URL}/transactions`,
+      getAuthHeaders()
     );
 
     return response.data;

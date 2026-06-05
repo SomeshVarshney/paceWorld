@@ -3,11 +3,13 @@ import { getDashboardStats } from "../api/dashboard";
 
 function DashboardPage() {
   const [stats, setStats] = useState({
-    totalProducts: 0,
-    totalCategories: 0,
-    totalPurchases: 0,
-    totalSales: 0,
-  });
+  totalProducts: 0,
+  totalCategories: 0,
+  totalPurchases: 0,
+  totalSales: 0,
+  inventoryValue: 0,
+  lowStockProducts: [],
+});
 
   useEffect(() => {
     const loadStats = async () => {
@@ -56,6 +58,66 @@ function DashboardPage() {
             {stats.totalSales}
           </p>
         </div>
+
+        <div className="bg-white p-6 rounded-xl shadow">
+  <h3>Inventory Value</h3>
+
+  <p className="text-3xl font-bold">
+    ₹{stats.inventoryValue.toLocaleString("en-IN")}
+  </p>
+</div>
+
+<div className="bg-white p-6 rounded-xl shadow">
+  <h3>Low Stock Products</h3>
+
+  <p className="text-3xl font-bold text-red-600">
+    {stats.lowStockProducts.length}
+  </p>
+</div>
+
+<div className="mt-8 bg-white rounded-xl shadow p-6">
+  <h3 className="text-xl font-bold mb-4">
+    ⚠ Low Stock Alerts
+  </h3>
+
+  {stats.lowStockProducts.length === 0 ? (
+    <p>No low stock products.</p>
+  ) : (
+    <ul className="space-y-2">
+      {stats.lowStockProducts.map(
+        (product: any) => (
+          <li
+            key={product.id}
+            className="border-b pb-2"
+          >
+            <strong>
+              {product.name}
+            </strong>
+
+            <br />
+
+            Boxes:
+            {" "}
+            {product.boxQuantity}
+
+            {" | "}
+
+            Units:
+            {" "}
+            {product.unitQuantity}
+
+            {" | "}
+
+            Threshold:
+            {" "}
+            {product.lowStockThreshold}
+          </li>
+        )
+      )}
+    </ul>
+  )}
+</div>
+
       </div>
     </>
   );

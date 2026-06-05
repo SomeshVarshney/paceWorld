@@ -1,9 +1,20 @@
 import axios from "axios";
 
-export const getDashboardStats = async () => {
-  const response = await axios.get(
-    "http://localhost:5000/dashboard"
-  );
+const getAuthHeaders = () => ({
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem(
+      "token"
+    )}`,
+  },
+});
 
-  return response.data;
-};
+export const getDashboardStats =
+  async () => {
+    const response =
+      await axios.get(
+        "http://localhost:5000/dashboard",
+        getAuthHeaders()
+      );
+
+    return response.data;
+  };
