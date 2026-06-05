@@ -53,12 +53,14 @@ function MainLayout({
               Products
             </Link>
 
-            <Link
-              to="/categories"
-              className="px-3 py-2 rounded hover:bg-gray-800"
-            >
-              Categories
-            </Link>
+            {user.role === "ADMIN" && (
+              <Link
+                to="/categories"
+                className="px-3 py-2 rounded hover:bg-gray-800"
+              >
+                Categories
+              </Link>
+            )}
 
             <Link
               to="/inventory"
@@ -90,5 +92,6 @@ function MainLayout({
     </div>
   );
 }
+
 
 export default MainLayout;
