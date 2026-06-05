@@ -5,6 +5,8 @@ import categoryRoutes from "./routes/categoryRoutes";
 import productRoutes from "./routes/productRoutes";
 import inventoryRoutes from "./routes/inventoryRoutes";
 import dashboardRoutes from "./routes/dashboardRoutes";
+import authRoutes
+from "./routes/authRoutes";
 
 const app = express();
 
@@ -14,6 +16,7 @@ app.use("/categories", categoryRoutes);
 app.use("/products", productRoutes);
 app.use("/inventory", inventoryRoutes);
 app.use("/dashboard", dashboardRoutes);
+app.use("/auth", authRoutes);
 
 app.get("/", (req, res) => {
   res.send("Paint Shop ERP Backend Running");
